@@ -135,51 +135,41 @@ class HBNBCommand(cmd.Cmd):
         """
         pass
 
-def do_create(self, args):
-    """ Create an object of any class with given parameters """
-    if not args:
-        print("** class name missing **")
-        return
+    def _key_value_parser(self, args):
+        """creates a dictionary from a list of strings"""
+        new_dict = {}
+        for arg in args:
+            if "=" in arg:
+                kvp = arg.split('=', 1)
+                key = kvp[0]
+                value = kvp[1]
+                if value[0] == value[-1] == '"':
+                    value = shlex.split(value)[0].replace('_', ' ')
+                else:
+                    try:
+                        value = int(value)
+                    except:
+                        try:
+                            value = float(value)
+                        except:
+                            continue
+                new_dict[key] = value
+        return new_dict
 
-    # Split the args by spaces, the first part is the class name
-    args_list = args.split()
-    class_name = args_list[0]
-
-    if class_name not in HBNBCommand.classes:
-        print("** class doesn't exist **")
-        return
-
-    # Create a new instance of the class
-    new_instance = HBNBCommand.classes[class_name]()
-
-    for param in args_list[1:]:
-        if '=' not in param:
-            continue
-
-        key, value = param.split('=', 1)
-        
-        # String value
-        if value.startswith('"') and value.endswith('"'):
-            value = value[1:-1].replace('_', ' ').replace('\\"', '"')
+    def do_create(self, arg):
+        """Creates a new instance of a class"""
+        args = arg.split()
+        if len(args) == 0:
+            print("** class name missing **")
+            return False
+        if args[0] in classes:
+            new_dict = self._key_value_parser(args[1:])
+            instance = classes[args[0]](**new_dict)
         else:
-            # Integer value
-            if '.' not in value:
-                try:
-                    value = int(value)
-                except ValueError:
-                    continue
-            else:
-                # Float value
-                try:
-                    value = float(value)
-                except ValueError:
-                    continue
-
-        setattr(new_instance, key, value)
-
-    storage.new(new_instance)
-    storage.save()
-    print(new_instance.id)
+            print("** class doesn't exist **")
+            return False
+        print(instance.id)
+        instance.save()
 
     def help_create(self):
         """
