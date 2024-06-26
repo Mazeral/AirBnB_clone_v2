@@ -157,7 +157,7 @@ class HBNBCommand(cmd.Cmd):
                 continue
 
             key, value = param.split('=', 1)
-            
+
             # String value
             if value.startswith('"') and value.endswith('"'):
                 value = value[1:-1].replace('_', ' ').replace('\\"', '"')
