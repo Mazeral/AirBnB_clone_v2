@@ -1,14 +1,17 @@
 #!/usr/bin/python3
 """
-This module instantiates an object of class FileStorage or DBStorage
-depending on the value of the environment variable HBNB_ENV.
+This module initializes the models package based on the value of the
+environment variable HBNB_TYPE_STORAGE.
 """
 
-# Import necessary modules
-from os import environ as env
+from os import getenv
 
-# Check the value of the environment variable HBNB_ENV
-if env.get('HBNB_TYPE_STORAGE') == "db":
+
+# Get the value of the environment variable HBNB_TYPE_STORAGE
+storage_t = getenv("HBNB_TYPE_STORAGE")
+
+# Initialize the storage object based on the value of the environment variable
+if storage_t == "db":
     # If the environment variable is set to "db", instantiate DBStorage
     from models.engine.db_storage import DBStorage
     storage = DBStorage()
@@ -18,3 +21,7 @@ else:
     from models.engine.file_storage import FileStorage
     storage = FileStorage()
     storage.reload()
+
+# Reload the storage dictionary from the file
+# NOTE: This is only executed when the environment variable HBNB_TYPE_STORAGE
+# is not set to "db"
