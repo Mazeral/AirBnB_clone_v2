@@ -14,8 +14,6 @@ storage_engine = environ.get("HBNB_TYPE_STORAGE")
 # If the storage engine is set to 'db', use SQLAlchemy's declarative base
 if storage_engine == "db":
     Base = declarative_base()
-else:
-    Base = object
 
 
 class User(BaseModel, Base):
@@ -28,10 +26,10 @@ class User(BaseModel, Base):
         first_name (str): The first name of the user.
         last_name (str): The last name of the user.
     """
-    __tablename__ = "users"
 
     # Define the columns for the User table if the storage engine is 'db'
     if storage_engine == "db":
+        __tablename__ = "users"
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
         first_name = Column(String(128), nullable=True)
