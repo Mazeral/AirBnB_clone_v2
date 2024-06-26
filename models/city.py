@@ -1,6 +1,6 @@
 #!/usr/bin/python
 """
-This module holds the City class. 
+This module holds the City class.
 City represents a city in the HBNB project.
 """
 
