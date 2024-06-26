@@ -28,6 +28,7 @@ class User(BaseModel, Base):
         first_name (str): The first name of the user.
         last_name (str): The last name of the user.
     """
+    __tablename__ = "users"
 
     # Define the columns for the User table if the storage engine is 'db'
     if storage_engine == "db":
