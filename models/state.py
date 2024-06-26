@@ -10,7 +10,7 @@ from sqlalchemy.orm import relationship
 Base = declarative_base()
 
 
-class State(BaseModel):
+class State(BaseModel, Base):
     """
     State class
 
