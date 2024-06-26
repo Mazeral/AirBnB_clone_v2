@@ -166,8 +166,8 @@ class HBNBCommand(cmd.Cmd):
         elif args not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args[0]]()
-        if args[0] in HBNBCommand.classes:
+        new_instance = HBNBCommand.classes[args[1]]()
+        if args[1] in HBNBCommand.classes:
             for param in args[1:]:
                 if '=' != param:
                     continue
