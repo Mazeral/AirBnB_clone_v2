@@ -8,7 +8,7 @@ depending on the value of the environment variable HBNB_ENV.
 from os import environ as env
 
 # Check the value of the environment variable HBNB_ENV
-if env.get('HBNB_ENV') == "db":
+if env.get('HBNB_TYPE_STORAGE') == "db":
     # If the environment variable is set to "db", instantiate DBStorage
     from models.engine.db_storage import DBStorage
     storage = DBStorage()
