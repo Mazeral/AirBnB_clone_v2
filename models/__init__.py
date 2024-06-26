@@ -1,27 +1,27 @@
 #!/usr/bin/python3
 """
-This module initializes the models package based on the value of the
-environment variable HBNB_TYPE_STORAGE.
+    This module initializes the storage system and defines dummy classes
+    for further use.
 """
 
-from os import getenv
+from models.engine.file_storage import FileStorage
+from models.engine.db_storage import DBStorage
+from os import environ
 
+# Get the storage engine type from the environment variable
+storage_engine = environ.get("HBNB_TYPE_STORAGE")
 
-# Get the value of the environment variable HBNB_TYPE_STORAGE
-storage_t = getenv("HBNB_TYPE_STORAGE")
-
-# Initialize the storage object based on the value of the environment variable
-if storage_t == "db":
-    # If the environment variable is set to "db", instantiate DBStorage
-    from models.engine.db_storage import DBStorage
+# Instantiate the storage system based on the storage engine type
+if storage_engine == "db":
+    # If the storage engine is set to 'db', use the DBStorage class
     storage = DBStorage()
+    storage.reload()
 else:
-    # If the environment variable is not set to "db", instantiate FileStorage
-    # and reload the storage dictionary from the file
-    from models.engine.file_storage import FileStorage
+    # Otherwise, use the FileStorage class
     storage = FileStorage()
     storage.reload()
 
-# Reload the storage dictionary from the file
-# NOTE: This is only executed when the environment variable HBNB_TYPE_STORAGE
-# is not set to "db"
+# The storage variable is used to interact with the selected storage system
+
+# The FileStorage class is used to manage storage in JSON format
+# The DBStorage class is used to manage storage in a MySQL database
