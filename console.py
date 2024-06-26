@@ -135,51 +135,51 @@ class HBNBCommand(cmd.Cmd):
         """
         pass
 
-def do_create(self, args):
-    """ Create an object of any class with given parameters """
-    if not args:
-        print("** class name missing **")
-        return
+    def do_create(self, args):
+        """ Create an object of any class with given parameters """
+        if not args:
+            print("** class name missing **")
+            return
 
-    # Split the args by spaces, the first part is the class name
-    args_list = args.split()
-    class_name = args_list[0]
+        # Split the args by spaces, the first part is the class name
+        args_list = args.split()
+        class_name = args_list[0]
 
-    if class_name not in HBNBCommand.classes:
-        print("** class doesn't exist **")
-        return
+        if class_name not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
 
-    # Create a new instance of the class
-    new_instance = HBNBCommand.classes[class_name]()
+        # Create a new instance of the class
+        new_instance = HBNBCommand.classes[class_name]()
 
-    for param in args_list[1:]:
-        if '=' not in param:
-            continue
+        for param in args_list[1:]:
+            if '=' not in param:
+                continue
 
-        key, value = param.split('=', 1)
-        
-        # String value
-        if value.startswith('"') and value.endswith('"'):
-            value = value[1:-1].replace('_', ' ').replace('\\"', '"')
-        else:
-            # Integer value
-            if '.' not in value:
-                try:
-                    value = int(value)
-                except ValueError:
-                    continue
+            key, value = param.split('=', 1)
+            
+            # String value
+            if value.startswith('"') and value.endswith('"'):
+                value = value[1:-1].replace('_', ' ').replace('\\"', '"')
             else:
-                # Float value
-                try:
-                    value = float(value)
-                except ValueError:
-                    continue
+                # Integer value
+                if '.' not in value:
+                    try:
+                        value = int(value)
+                    except ValueError:
+                        continue
+                else:
+                    # Float value
+                    try:
+                        value = float(value)
+                    except ValueError:
+                        continue
 
-        setattr(new_instance, key, value)
+            setattr(new_instance, key, value)
 
-    storage.new(new_instance)
-    storage.save()
-    print(new_instance.id)
+        storage.new(new_instance)
+        storage.save()
+        print(new_instance.id)
 
     def help_create(self):
         """
