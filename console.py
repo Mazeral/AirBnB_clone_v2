@@ -156,42 +156,20 @@ class HBNBCommand(cmd.Cmd):
                 new_dict[key] = value
         return new_dict
 
-    def do_create(self, args):
-        """
-        Create an object of any class.
-        """
-        if not args:
+    def do_create(self, arg):
+        """Creates a new instance of a class"""
+        args = arg.split()
+        if len(args) == 0:
             print("** class name missing **")
-            return
-        elif args not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        new_instance = HBNBCommand.classes[args[0]]()
-        if args[0] in HBNBCommand.classes:
-            for param in args[1:]:
-                if '=' != param:
-                    continue
-                key, value = param.split('=', 1)
-                if value.startswith('"') and value.endswith('"'):
-                    value = value[1:-1].replace('_', ' ').replace('\\"', '"')
-                else:
-                    if '.' not in value:
-                        try:
-                            value = int(value)
-                        except ValueError as e:
-                            continue
-                    else:
-                        try:
-                            value = float(value)
-                        except ValueError as e:
-                            continue
-                setattr(new_instance, key, value)
+            return False
+        if args[0] in classes:
+            new_dict = self._key_value_parser(args[1:])
+            instance = classes[args[0]](**new_dict)
         else:
             print("** class doesn't exist **")
             return False
-        storage.new(new_instance)
-        storage.save()
-        print(new_instance.id)
+        print(instance.id)
+        instance.save()
 
     def help_create(self):
         """
