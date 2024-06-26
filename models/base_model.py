@@ -10,7 +10,7 @@ from sqlalchemy import Column, Integer, String, DateTime
 
 Base = declarative_base()
 
-class BaseModel(Base):
+class BaseModel:
     """
     A base class for all hbnb models.
 
