@@ -11,6 +11,7 @@ import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
+storage_engine = environ.get("HBNB_TYPE_STORAGE")
 
 class City(BaseModel, Base):
     """
@@ -21,7 +22,7 @@ class City(BaseModel, Base):
         name (str): The name of the city.
         places (list): A list of Place instances that belong to the city.
     """
-    if models.storage_t == "db":
+    if storage_engine == "db":
         # Table name for the database
         __tablename__ = 'cities'
 

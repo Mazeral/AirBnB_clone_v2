@@ -12,6 +12,7 @@ import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
+storage_engine = environ.get("HBNB_TYPE_STORAGE")
 
 class State(BaseModel, Base):
     """
@@ -23,7 +24,7 @@ class State(BaseModel, Base):
     """
 
     # Table name if storage type is db
-    if models.storage_t == "db":
+    if storage_engine == "db":
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state")

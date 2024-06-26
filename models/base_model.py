@@ -13,7 +13,8 @@ import uuid
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
-if models.storage_t == "db":
+storage_engine = environ.get("HBNB_TYPE_STORAGE")
+if storage_engine == "db":
     Base = declarative_base()
 else:
     Base = object
@@ -24,7 +25,7 @@ class BaseModel:
     The BaseModel class from which future classes will be derived.
     It provides common functionality for all models.
     """
-    if models.storage_t == "db":
+    if storage_engine == "db":
         id = Column(String(60), primary_key=True)
         created_at = Column(DateTime, default=datetime.utcnow)
         updated_at = Column(DateTime, default=datetime.utcnow)
