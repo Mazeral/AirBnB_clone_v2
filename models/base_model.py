@@ -17,12 +17,9 @@ storage_engine = environ.get("HBNB_TYPE_STORAGE")
 # If the storage engine is set to 'db', use SQLAlchemy's declarative base
 if (storage_engine == "db"):
     Base = declarative_base()
-# Otherwise, use a simple object as the base class
-else:
-    Base = object
 
 
-class BaseModel(Base):
+class BaseModel():
     """
     Base class to define all common attributes and methods for other classes.
     Inherits from SQLAlchemy's declarative base if the storage engine is set to 'db',
